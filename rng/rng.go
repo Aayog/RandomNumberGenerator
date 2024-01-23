@@ -17,7 +17,7 @@ func NewRandomNumberGenerator(prev ...int64) *randomNumberGenerator {
 		modulus:    1 << 32, // 2^31
 		multiplier: 16645215,
 		increment:  1013904223,
-		seed:       time.Now().UnixMilli(),
+		seed:       time.Now().UnixMicro(),
 	}
 
 	// Override defaults based on provided arguments
@@ -32,6 +32,9 @@ func NewRandomNumberGenerator(prev ...int64) *randomNumberGenerator {
 	}
 	if len(prev) > 3 {
 		gen.modulus = prev[3]
+	}
+	if gen.seed < 0 {
+		gen.seed *= -1
 	}
 	return &gen
 }
