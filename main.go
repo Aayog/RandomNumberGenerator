@@ -30,7 +30,7 @@ func main() {
 		increment:  1013904223,
 		seed:       1,
 	}
-	prev := getRandomInt(LCG, generator, 1, 1, 10)
+	prev := getRandomInt(LCG, generator, 1000, 1, 10)
 	for i := 0; i < 100; i++ {
 
 		fmt.Println(prev)
