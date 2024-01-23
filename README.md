@@ -1,7 +1,3 @@
-Creating a README file for your Go project is an excellent way to provide users with necessary information about your software. Below is a template for your README file, including installation instructions for Go, how to run the project, and a description of the Linear Congruential Generator (LCG) implementation.
-
----
-
 # LCG Random Number Generator in Go 🎲
 
 ## About
@@ -70,6 +66,8 @@ To use the random number generator:
      ```go
      randomNumber := generator.GetRandomInt(min, max)
      ```
+### Output
+![RNG Output](output.png)
 
 ## Contributing
 
