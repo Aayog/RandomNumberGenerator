@@ -2,18 +2,30 @@ package main
 
 import (
 	"fmt"
-	"math"
+
+	"aayogkoirala.com/rng"
 )
 
 func main() {
-	generator := RandomNumberGenerator{
-		modulus:    int64(math.Pow(2, 32)),
-		multiplier: 1664525,
-		increment:  1013904223,
-		seed:       100,
+	generator := rng.NewRandomNumberGenerator()
+	fmt.Println("Testing out the random generator.")
+	fmt.Println("6 sided die roll 10 times:")
+	for i := 0; i < 10; i++ {
+		fmt.Printf("%d  ", generator.GetRandomInt(1, 6))
 	}
+	fmt.Println()
+	fmt.Println("10 coin tosses")
+	for i := 0; i < 10; i++ {
+		coin := "T"
+		if generator.GetRandomInt(1, 2) == 1 {
+			coin = "H"
+		}
+		fmt.Printf("%s  ", coin)
+	}
+	fmt.Println()
+	fmt.Println("100 random 1 digit numbers")
 	for i := 0; i < 100; i++ {
-		randomInt := generator.getRandomInt(1, 100)
-		fmt.Println(randomInt)
+		fmt.Printf("%d  ", generator.GetRandomInt(0, 9))
 	}
+	fmt.Println()
 }
