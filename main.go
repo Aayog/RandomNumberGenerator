@@ -12,15 +12,13 @@ type RandomNumberGenerator struct {
 	seed       int64 // X_0 -- initial value that starts the random number sequence; should ideally be a random or a semi-random (e.g., time-based) value
 }
 
-func LCG(generator RandomNumberGenerator, prev ...int64) int64 {
-	if len(prev) > 0 {
-		generator.seed = prev[0]
-	}
-	return (generator.multiplier*generator.seed + generator.increment) % generator.modulus
+func (rng *RandomNumberGenerator) Next() int64 {
+	rng.seed = (rng.multiplier*rng.seed + rng.increment) % rng.modulus
+	return rng.seed
 }
 
-func getRandomInt(rngFunc func(RandomNumberGenerator, ...int64) int64, rng RandomNumberGenerator, seed int64, min int64, max int64) int64 {
-	return rngFunc(rng, seed)%(max-min) + min
+func getRandomInt(rng *RandomNumberGenerator, min int64, max int64) int64 {
+	return rng.Next()%(max-min+1) + min
 }
 
 func main() {
@@ -30,9 +28,8 @@ func main() {
 		increment:  1013904223,
 		seed:       100,
 	}
-	prev := getRandomInt(LCG, generator, 1, 1, 10)
 	for i := 0; i < 100; i++ {
-		fmt.Println(prev)
-		prev = getRandomInt(LCG, generator, prev, 1, 10)
+		randomInt := getRandomInt(&generator, 1, 100)
+		fmt.Println(randomInt)
 	}
 }
