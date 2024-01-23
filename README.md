@@ -66,6 +66,15 @@ To use the random number generator:
      ```go
      randomNumber := generator.GetRandomInt(min, max)
      ```
+
+4. **Add your own Random Number Generator:**
+    - Add a different function that uses the paramters and generates random number in a different way and replace with LCG in Next function, it should seemlessly use this new method
+    ```go
+        func (rng *randomNumberGenerator) Next() int64 {
+            rng.seed = LCG(rng)
+            return rng.seed
+        }
+    ```
 ### Output
 ![RNG Output](output.png)
 
