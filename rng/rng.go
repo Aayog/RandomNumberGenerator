@@ -22,7 +22,7 @@ func NewRandomNumberGenerator(prev ...int64) *randomNumberGenerator {
 
 	// Override defaults based on provided arguments
 	if len(prev) > 0 {
-		gen.modulus = prev[0]
+		gen.seed = prev[0]
 	}
 	if len(prev) > 1 {
 		gen.multiplier = prev[1]
@@ -31,7 +31,7 @@ func NewRandomNumberGenerator(prev ...int64) *randomNumberGenerator {
 		gen.increment = prev[2]
 	}
 	if len(prev) > 3 {
-		gen.seed = prev[3]
+		gen.modulus = prev[3]
 	}
 	return &gen
 }

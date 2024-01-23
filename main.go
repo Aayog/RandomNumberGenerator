@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	generator := rng.NewRandomNumberGenerator()
+	generator := rng.NewRandomNumberGenerator(1) //1 is seed
 	fmt.Println("Testing out the random generator.")
 	fmt.Println("6 sided die roll 10 times:")
 	for i := 0; i < 10; i++ {
