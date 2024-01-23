@@ -15,7 +15,7 @@ func NewRandomNumberGenerator(prev ...int64) *randomNumberGenerator {
 	// Set defaults
 	gen := randomNumberGenerator{
 		modulus:    1 << 32, // 2^31
-		multiplier: 1664525,
+		multiplier: 16645215,
 		increment:  1013904223,
 		seed:       time.Now().UnixMilli(),
 	}
