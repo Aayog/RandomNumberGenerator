@@ -12,32 +12,30 @@ type randomNumberGenerator struct {
 // NewRandomNumberGenerator creates a RandomNumberGenerator with optional parameters.
 // The expected order of parameters is modulus, multiplier, increment, seed.
 func NewRandomNumberGenerator(prev ...int64) *randomNumberGenerator {
-	// Set defaults
-	gen := randomNumberGenerator{
-		modulus:    1 << 32, // 2^31
-		multiplier: 16645215,
-		increment:  1013904223,
-		seed:       time.Now().UnixMicro(),
-	}
+    gen := randomNumberGenerator{
+        modulus:    1 << 32, // Equivalent to 2^32
+        multiplier: 16_645_215,
+        increment:  1_013_904_223,
+        seed:       time.Now().UnixMicro() & 0x7FFFFFFFFFFFFFFF, // Ensures seed is non-negative
+    }
 
-	// Override defaults based on provided arguments
-	if len(prev) > 0 {
-		gen.seed = prev[0]
-	}
-	if len(prev) > 1 {
-		gen.multiplier = prev[1]
-	}
-	if len(prev) > 2 {
-		gen.increment = prev[2]
-	}
-	if len(prev) > 3 {
-		gen.modulus = prev[3]
-	}
-	if gen.seed < 0 {
-		gen.seed *= -1
-	}
-	return &gen
+    switch len(prev) {
+    case 4:
+        gen.modulus = prev[3]
+        fallthrough
+    case 3:
+        gen.increment = prev[2]
+        fallthrough
+    case 2:
+        gen.multiplier = prev[1]
+        fallthrough
+    case 1:
+        gen.seed = prev[0] & 0x7FFFFFFFFFFFFFFF // Ensures seed is non-negative
+    }
+
+    return &gen
 }
+
 
 func (rng *randomNumberGenerator) Next() int64 {
 	rng.seed = LCG(rng)
